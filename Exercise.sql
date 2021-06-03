@@ -137,4 +137,28 @@ order by count(pe.EmotionId)
 
 --------------------------------------
 19. Which grade has the largest number of poems with an emotion of joy?
+
+Select top 1 g.Name, count(a.gradeId) '# of joy poems'
+From Poem p
+left join Author a on a.id = p.AuthorId
+left join Grade g on g.id = a.GradeId
+left join PoemEmotion pe on pe.PoemId = p.id
+left join Emotion e on e.id = pe.EmotionId
+where e.Name = 'joy'
+Group by a.GradeId, g.Name
+order by count(a.gradeId) Desc
+
+--------------------------------------
+20. Which gender has the least number of poems with an emotion of fear?
+
+Select top 1 g.Name, count(a.GenderId) '# of fearful poems'
+From Poem p
+left join Author a on a.id = p.AuthorId
+left join Gender g on g.id = a.GenderId
+left join PoemEmotion pe on pe.PoemId = p.id
+left join Emotion e on e.id = pe.EmotionId
+where e.Name = 'fear'
+Group by a.GradeId, g.Name
+order by count(a.GenderId) 
+
 */

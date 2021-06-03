@@ -158,7 +158,7 @@ left join Gender g on g.id = a.GenderId
 left join PoemEmotion pe on pe.PoemId = p.id
 left join Emotion e on e.id = pe.EmotionId
 where e.Name = 'fear'
-Group by a.GradeId, g.Name
+Group by a.GenderId, g.Name
 order by count(a.GenderId) 
 
 */

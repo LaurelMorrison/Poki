@@ -78,4 +78,63 @@ where g.Name = '4th Grade'
 
 --------------------------------------
 12. How many poems are there per grade?
+
+Select count(p.Title) '# of poems by grade', g.name
+From Author a
+left join Grade g on g.id = a.GradeId
+left join Poem p on p.AuthorId = a.Id
+Group by g.name
+
+--------------------------------------
+13. How many authors are in each grade? (Order your results by grade starting with 1st Grade)
+
+Select count(a.Name) '# of poets by grade', g.name
+From Author a
+left join Grade g on g.id = a.GradeId
+Group by g.name
+order by g.name;
+
+--------------------------------------
+14. What is the title of the poem that has the most words?
+
+Select top 1 p.Title, p.WordCount
+From Poem p
+Order by p.WordCount DESC;
+
+--------------------------------------
+15. Which author(s) have the most poems? (Remember authors can have the same name.)
+
+Select top 1 count(p.AuthorId) '# of poem', a.Name
+From Author a
+left join Poem p on p.AuthorId = a.Id
+Group by p.AuthorId, a.Name
+order by count(p.AuthorId) Desc
+
+--------------------------------------
+16. How many poems have an emotion of sadness?
+Select count(p.id) 'sad poem count'
+From Poem p
+left join PoemEmotion pe on pe.PoemId = p.id
+left join Emotion e on e.id = pe.EmotionId
+where e.Name = 'sadness'
+
+--------------------------------------
+17. How many poems are not associated with any emotion?
+
+Select count(p.id) 'poems with no emotions'
+From Poem p
+left join PoemEmotion pe on pe.PoemId = p.id
+where pe.id IS NULL
+
+--------------------------------------
+18. Which emotion is associated with the least number of poems?
+
+Select top 1 e.Name, Count(pe.EmotionId) 'emotion count'
+From PoemEmotion pe
+left join Emotion e on e.id = pe.EmotionId
+Group by pe.EmotionId, e.Name
+order by count(pe.EmotionId)
+
+--------------------------------------
+19. Which grade has the largest number of poems with an emotion of joy?
 */
